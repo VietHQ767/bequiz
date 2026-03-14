@@ -11,6 +11,7 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
   process.env.CLIENT_ORIGIN,
   "http://localhost:3000",
+  "https://fe-game-jm8q.vercel.app",
 ].filter(Boolean);
 
 const originSetting = allowedOrigins.length ? allowedOrigins : "*";
