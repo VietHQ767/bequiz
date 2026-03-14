@@ -12,12 +12,20 @@ const allowedOrigins = [
   process.env.CLIENT_ORIGIN,
   "http://localhost:3000",
   "https://fe-game-jm8q.vercel.app",
+  "https://fe-game-tv44.vercel.app",
 ].filter(Boolean);
 
-const originSetting = allowedOrigins.length ? allowedOrigins : "*";
+// Cho phép mọi subdomain Vercel của project (fe-game-*.vercel.app)
+const vercelPreviewPattern = /^https:\/\/fe-game-[a-z0-9-]+\.vercel\.app$/;
 
 const corsOptions = {
-  origin: originSetting,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || vercelPreviewPattern.test(origin)) {
+      return callback(null, true);
+    }
+    callback(null, false);
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
