@@ -16,6 +16,7 @@ const allowedOrigins = [
   "https://gamequiz-liard.vercel.app",
   "https://game-pi-hazel.vercel.app",
   "https://gamequiz-dq18.vercel.app",
+  
 ].filter(Boolean);
 
 const vercelPreviewPattern = /^https:\/\/fe-game-[a-z0-9-]+\.vercel\.app$/;
