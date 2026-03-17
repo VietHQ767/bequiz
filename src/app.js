@@ -15,24 +15,30 @@ const allowedOrigins = [
   "https://fe-game-tv44.vercel.app",
 ].filter(Boolean);
 
-// Cho phép mọi subdomain Vercel của project (fe-game-*.vercel.app)
 const vercelPreviewPattern = /^https:\/\/fe-game-[a-z0-9-]+\.vercel\.app$/;
 
+function corsOrigin(origin, callback) {
+  if (!origin) return callback(null, true);
+  if (allowedOrigins.includes(origin) || vercelPreviewPattern.test(origin)) {
+    return callback(null, true);
+  }
+  callback(null, false);
+}
+
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin) || vercelPreviewPattern.test(origin)) {
-      return callback(null, true);
-    }
-    callback(null, false);
-  },
+  origin: corsOrigin,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
+  optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true, message: "Backend is running" });
+});
 
 app.use("/api", quizRoutes);
 app.use("/api", questionRoutes);
