@@ -13,6 +13,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://fe-game-jm8q.vercel.app",
   "https://fe-game-tv44.vercel.app",
+  "https://gamequiz-xq8j.vercel.app",
   "https://gamequiz-liard.vercel.app",
   "https://game-pi-hazel.vercel.app",
   "https://gamequiz-dq18.vercel.app",
@@ -20,11 +21,15 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 const vercelPreviewPattern = /^https:\/\/fe-game-[a-z0-9-]+\.vercel\.app$/;
-const gamequizPreviewPattern = /^https:\/\/gamequiz-[a-z0-9-]+\.vercel\.app$/;
+const gamequizPreviewPattern = /^https:\/\/gamequiz-[a-z0-9.-]+\.vercel\.app$/;
 
 function corsOrigin(origin, callback) {
   if (!origin) return callback(null, true);
-  if (allowedOrigins.includes(origin) || vercelPreviewPattern.test(origin) || gamequizPreviewPattern.test(origin)) {
+  if (
+    allowedOrigins.includes(origin) ||
+    vercelPreviewPattern.test(origin) ||
+    gamequizPreviewPattern.test(origin)
+  ) {
     return callback(null, true);
   }
   callback(new Error("Not allowed by CORS"));
